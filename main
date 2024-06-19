@@ -1,0 +1,55 @@
+#include <MeAuriga.h>
+
+MeLEDMatrix ledMatrix(PORT_10); // Cambia PORT_1 al puerto que estés usando
+
+
+uint8_t bandera1[] = {
+  0b11000011, 
+  0b11000011, 
+  0b11000011, 
+  0b11000011, 
+  0b11000011, 
+  0b11000011, 
+  0b11000011, 
+  0b11000011, 
+  0b11000011, 
+  0b11000011, 
+  0b11000011, 
+  0b11000011, 
+  0b11000011,
+  0b11000011, 
+  0b11000011,
+  0b11000011,    
+};
+
+uint8_t bandera2[] = {
+  0b11000011, 
+  0b11000011, 
+  0b11000011, 
+  0b11000011, 
+  0b11000011, 
+  0b11111111, 
+  0b11000011, 
+  0b11000011, 
+  0b11000011, 
+  0b11000011, 
+  0b11000011, 
+  0b11000011, 
+  0b11000011,
+  0b11000011, 
+  0b11000011,
+  0b11000011,    
+};
+
+void setup() {
+  ledMatrix.setBrightness(7); // Ajusta la luminosidad
+  ledMatrix.clearScreen(); // Asegúrate de que la pantalla esté limpia antes de dibujar
+  
+}
+
+void loop() {
+   ledMatrix.drawBitmap(0, 0, 16, bandera1); // Dibuja el bitmap en la posición (0, 0)
+   delay(500);
+   ledMatrix.drawBitmap(0, 0, 16, bandera2); // Dibuja el bitmap en la posición (0, 0)
+   delay(500);
+}
