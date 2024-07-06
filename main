@@ -1,55 +1,49 @@
-#include <MeAuriga.h>
+#include <Arduino.h>
 
-MeLEDMatrix ledMatrix(PORT_10); // Cambia PORT_1 al puerto que estés usando
+#define ROWS 16
+#define COLUMNS 8
 
-
-uint8_t bandera1[] = {
-  0b11000011, 
-  0b11000011, 
-  0b11000011, 
-  0b11000011, 
-  0b11000011, 
-  0b11000011, 
-  0b11000011, 
-  0b11000011, 
-  0b11000011, 
-  0b11000011, 
-  0b11000011, 
-  0b11000011, 
-  0b11000011,
-  0b11000011, 
-  0b11000011,
-  0b11000011,    
+uint8_t nave1[ROWS] = {
+    0b00000000, 0b00000000, 0b00000000, 0b00000000,
+    0b00000000, 0b00000000, 0b00000000, 0b00000011,
+    0b00000111, 0b00000011, 0b00000000, 0b00000000,
+    0b00000000, 0b00000000, 0b00000000, 0b00000000
 };
 
-uint8_t bandera2[] = {
-  0b11000011, 
-  0b11000011, 
-  0b11000011, 
-  0b11000011, 
-  0b11000011, 
-  0b11111111, 
-  0b11000011, 
-  0b11000011, 
-  0b11000011, 
-  0b11000011, 
-  0b11000011, 
-  0b11000011, 
-  0b11000011,
-  0b11000011, 
-  0b11000011,
-  0b11000011,    
-};
+// Función para desplazar la nave un paso a la derecha
+void desplazarDerecha(uint8_t nave[ROWS]) {
+    for (int i = 0; i < ROWS; i++) {
+        nave[i] = (nave[i] >> 1); // Desplaza un bit a la derecha
+    }
+}
+
+// Función para imprimir la nave (para propósitos de depuración)
+void imprimirNave(uint8_t nave[ROWS]) {
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 7; j >= 0; j--) {
+            Serial.print((nave[i] >> j) & 0x01);
+        }
+        Serial.println();
+    }
+    Serial.println();
+}
 
 void setup() {
-  ledMatrix.setBrightness(7); // Ajusta la luminosidad
-  ledMatrix.clearScreen(); // Asegúrate de que la pantalla esté limpia antes de dibujar
-  
+    Serial.begin(9600);
+
+    // Imprimir la nave original
+    Serial.println("Nave original:");
+    imprimirNave(nave1);
+
+    // Desplazar la nave a la derecha
+    desplazarDerecha(nave1);
+
+    // Imprimir la nave desplazada
+    Serial.println("Nave desplazada:");
+    imprimirNave(nave1);
 }
 
 void loop() {
-   ledMatrix.drawBitmap(0, 0, 16, bandera1); // Dibuja el bitmap en la posición (0, 0)
-   delay(500);
-   ledMatrix.drawBitmap(0, 0, 16, bandera2); // Dibuja el bitmap en la posición (0, 0)
-   delay(500);
+    // Nada en el loop
 }
+
